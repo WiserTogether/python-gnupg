@@ -1006,7 +1006,7 @@ class GPG(object):
 
     def decrypt_file(self, file, always_trust=False, passphrase=None,
                      output=None):
-        args = ["--decrypt"]
+        args = []
         if output:  # write the output to a file with the specified name
             if os.path.exists(output):
                 os.remove(output) # to avoid overwrite confirmation message
@@ -1014,6 +1014,7 @@ class GPG(object):
         if always_trust:
             args.append("--always-trust")
         result = self.result_map['crypt'](self)
+        args.append("--decrypt")
         self._handle_io(args, file, result, passphrase, binary=True)
         logger.debug('decrypt result: %r', result.data)
         return result
